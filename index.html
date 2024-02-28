@@ -1,0 +1,162 @@
+<h1 style="text-align:center;">Dreamverse State</h1>
+<h2 style="text-align:center;">February 28, 2024</h2>
+<div style="padding: 80px;"><html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #2b252f;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "purple", "font": {"color": "white"}, "id": "independence", "label": "independence", "shape": "dot", "title": "independence"}, {"color": "red", "font": {"color": "white"}, "id": "house", "label": "house", "shape": "dot", "title": "house"}, {"color": "purple", "font": {"color": "white"}, "id": "resourcefulness", "label": "resourcefulness", "shape": "dot", "title": "resourcefulness"}, {"color": "purple", "font": {"color": "white"}, "id": "determination", "label": "determination", "shape": "dot", "title": "determination"}, {"color": "purple", "font": {"color": "white"}, "id": "challenges", "label": "challenges", "shape": "dot", "title": "challenges"}, {"color": "purple", "font": {"color": "white"}, "id": "night", "label": "night", "shape": "dot", "title": "night"}, {"color": "red", "font": {"color": "white"}, "id": "support", "label": "support", "shape": "dot", "title": "support"}, {"color": "purple", "font": {"color": "white"}, "id": "change", "label": "change", "shape": "dot", "title": "change"}, {"color": "red", "font": {"color": "white"}, "id": "anxiety", "label": "anxiety", "shape": "dot", "title": "anxiety"}, {"color": "purple", "font": {"color": "white"}, "id": "confusion", "label": "confusion", "shape": "dot", "title": "confusion"}, {"color": "red", "font": {"color": "white"}, "id": "protection", "label": "protection", "shape": "dot", "title": "protection"}, {"color": "purple", "font": {"color": "white"}, "id": "resilience", "label": "resilience", "shape": "dot", "title": "resilience"}, {"color": "purple", "font": {"color": "white"}, "id": "fire", "label": "fire", "shape": "dot", "title": "fire"}, {"color": "red", "font": {"color": "white"}, "id": "city", "label": "city", "shape": "dot", "title": "city"}, {"color": "purple", "font": {"color": "white"}, "id": "smoke", "label": "smoke", "shape": "dot", "title": "smoke"}, {"color": "red", "font": {"color": "white"}, "id": "fear", "label": "fear", "shape": "dot", "title": "fear"}, {"color": "purple", "font": {"color": "white"}, "id": "danger", "label": "danger", "shape": "dot", "title": "danger"}, {"color": "purple", "font": {"color": "white"}, "id": "bridge", "label": "bridge", "shape": "dot", "title": "bridge"}, {"color": "purple", "font": {"color": "white"}, "id": "childhood", "label": "childhood", "shape": "dot", "title": "childhood"}, {"color": "purple", "font": {"color": "white"}, "id": "frustration", "label": "frustration", "shape": "dot", "title": "frustration"}, {"color": "purple", "font": {"color": "white"}, "id": "garden", "label": "garden", "shape": "dot", "title": "garden"}, {"color": "purple", "font": {"color": "white"}, "id": "chaos", "label": "chaos", "shape": "dot", "title": "chaos"}, {"color": "red", "font": {"color": "white"}, "id": "uncertainty", "label": "uncertainty", "shape": "dot", "title": "uncertainty"}, {"color": "red", "font": {"color": "white"}, "id": "nostalgia", "label": "nostalgia", "shape": "dot", "title": "nostalgia"}, {"color": "purple", "font": {"color": "white"}, "id": "loss", "label": "loss", "shape": "dot", "title": "loss"}, {"color": "purple", "font": {"color": "white"}, "id": "guidance", "label": "guidance", "shape": "dot", "title": "guidance"}, {"color": "purple", "font": {"color": "white"}, "id": "door", "label": "door", "shape": "dot", "title": "door"}, {"color": "purple", "font": {"color": "white"}, "id": "loss control", "label": "loss control", "shape": "dot", "title": "loss control"}, {"color": "purple", "font": {"color": "white"}, "id": "window", "label": "window", "shape": "dot", "title": "window"}, {"color": "purple", "font": {"color": "white"}, "id": "success", "label": "success", "shape": "dot", "title": "success"}, {"color": "purple", "font": {"color": "white"}, "id": "guilt", "label": "guilt", "shape": "dot", "title": "guilt"}, {"color": "purple", "font": {"color": "white"}, "id": "car", "label": "car", "shape": "dot", "title": "car"}, {"color": "purple", "font": {"color": "white"}, "id": "insecurity", "label": "insecurity", "shape": "dot", "title": "insecurity"}, {"color": "purple", "font": {"color": "white"}, "id": "wedding", "label": "wedding", "shape": "dot", "title": "wedding"}, {"color": "purple", "font": {"color": "white"}, "id": "island", "label": "island", "shape": "dot", "title": "island"}, {"color": "purple", "font": {"color": "white"}, "id": "sun", "label": "sun", "shape": "dot", "title": "sun"}, {"color": "purple", "font": {"color": "white"}, "id": "train", "label": "train", "shape": "dot", "title": "train"}, {"color": "purple", "font": {"color": "white"}, "id": "confrontation", "label": "confrontation", "shape": "dot", "title": "confrontation"}, {"color": "red", "font": {"color": "white"}, "id": "control", "label": "control", "shape": "dot", "title": "control"}, {"color": "purple", "font": {"color": "white"}, "id": "helicopter", "label": "helicopter", "shape": "dot", "title": "helicopter"}, {"color": "purple", "font": {"color": "white"}, "id": "identity", "label": "identity", "shape": "dot", "title": "identity"}, {"color": "purple", "font": {"color": "white"}, "id": "health", "label": "health", "shape": "dot", "title": "health"}, {"color": "purple", "font": {"color": "white"}, "id": "friendship", "label": "friendship", "shape": "dot", "title": "friendship"}, {"color": "purple", "font": {"color": "white"}, "id": "road", "label": "road", "shape": "dot", "title": "road"}, {"color": "purple", "font": {"color": "white"}, "id": "enjoyment", "label": "enjoyment", "shape": "dot", "title": "enjoyment"}, {"color": "purple", "font": {"color": "white"}, "id": "vulnerability", "label": "vulnerability", "shape": "dot", "title": "vulnerability"}, {"color": "purple", "font": {"color": "white"}, "id": "pressure", "label": "pressure", "shape": "dot", "title": "pressure"}, {"color": "purple", "font": {"color": "white"}, "id": "family", "label": "family", "shape": "dot", "title": "family"}, {"color": "purple", "font": {"color": "white"}, "id": "empowerment", "label": "empowerment", "shape": "dot", "title": "empowerment"}, {"color": "purple", "font": {"color": "white"}, "id": "power", "label": "power", "shape": "dot", "title": "power"}, {"color": "purple", "font": {"color": "white"}, "id": "conflict", "label": "conflict", "shape": "dot", "title": "conflict"}, {"color": "purple", "font": {"color": "white"}, "id": "selfworth", "label": "selfworth", "shape": "dot", "title": "selfworth"}, {"color": "purple", "font": {"color": "white"}, "id": "struggle", "label": "struggle", "shape": "dot", "title": "struggle"}, {"color": "purple", "font": {"color": "white"}, "id": "challenge", "label": "challenge", "shape": "dot", "title": "challenge"}, {"color": "purple", "font": {"color": "white"}, "id": "hard work", "label": "hard work", "shape": "dot", "title": "hard work"}, {"color": "purple", "font": {"color": "white"}, "id": "water", "label": "water", "shape": "dot", "title": "water"}, {"color": "purple", "font": {"color": "white"}, "id": "personal growth", "label": "personal growth", "shape": "dot", "title": "personal growth"}, {"color": "purple", "font": {"color": "white"}, "id": "relationships", "label": "relationships", "shape": "dot", "title": "relationships"}, {"color": "purple", "font": {"color": "white"}, "id": "authority", "label": "authority", "shape": "dot", "title": "authority"}, {"color": "red", "font": {"color": "white"}, "id": "school", "label": "school", "shape": "dot", "title": "school"}, {"color": "purple", "font": {"color": "white"}, "id": "reflection", "label": "reflection", "shape": "dot", "title": "reflection"}, {"color": "purple", "font": {"color": "white"}, "id": "hill", "label": "hill", "shape": "dot", "title": "hill"}, {"color": "purple", "font": {"color": "white"}, "id": "transformation", "label": "transformation", "shape": "dot", "title": "transformation"}, {"color": "purple", "font": {"color": "white"}, "id": "new beginnings", "label": "new beginnings", "shape": "dot", "title": "new beginnings"}, {"color": "purple", "font": {"color": "white"}, "id": "trust", "label": "trust", "shape": "dot", "title": "trust"}, {"color": "purple", "font": {"color": "white"}, "id": "competition", "label": "competition", "shape": "dot", "title": "competition"}, {"color": "purple", "font": {"color": "white"}, "id": "moving", "label": "moving", "shape": "dot", "title": "moving"}, {"color": "purple", "font": {"color": "white"}, "id": "stability", "label": "stability", "shape": "dot", "title": "stability"}, {"color": "purple", "font": {"color": "white"}, "id": "growth", "label": "growth", "shape": "dot", "title": "growth"}, {"color": "purple", "font": {"color": "white"}, "id": "exploration", "label": "exploration", "shape": "dot", "title": "exploration"}, {"color": "purple", "font": {"color": "white"}, "id": "selfexpression", "label": "selfexpression", "shape": "dot", "title": "selfexpression"}, {"color": "purple", "font": {"color": "white"}, "id": "balance", "label": "balance", "shape": "dot", "title": "balance"}, {"color": "purple", "font": {"color": "white"}, "id": "overwhelm", "label": "overwhelm", "shape": "dot", "title": "overwhelm"}, {"color": "purple", "font": {"color": "white"}, "id": "stress", "label": "stress", "shape": "dot", "title": "stress"}, {"color": "purple", "font": {"color": "white"}, "id": "connection", "label": "connection", "shape": "dot", "title": "connection"}, {"color": "purple", "font": {"color": "white"}, "id": "desire", "label": "desire", "shape": "dot", "title": "desire"}, {"color": "purple", "font": {"color": "white"}, "id": "belonging", "label": "belonging", "shape": "dot", "title": "belonging"}, {"color": "purple", "font": {"color": "white"}, "id": "travel", "label": "travel", "shape": "dot", "title": "travel"}, {"color": "purple", "font": {"color": "white"}, "id": "adventure", "label": "adventure", "shape": "dot", "title": "adventure"}, {"color": "purple", "font": {"color": "white"}, "id": "new experiences", "label": "new experiences", "shape": "dot", "title": "new experiences"}, {"color": "purple", "font": {"color": "white"}, "id": "familiarity", "label": "familiarity", "shape": "dot", "title": "familiarity"}, {"color": "purple", "font": {"color": "white"}, "id": "sky", "label": "sky", "shape": "dot", "title": "sky"}, {"color": "purple", "font": {"color": "white"}, "id": "flying", "label": "flying", "shape": "dot", "title": "flying"}]);
+                  edges = new vis.DataSet([{"from": "independence", "to": "house", "value": 2}, {"from": "house", "to": "bridge", "value": 2}, {"from": "house", "to": "childhood", "value": 2}, {"from": "house", "to": "frustration", "value": 2}, {"from": "house", "to": "garden", "value": 3}, {"from": "house", "to": "chaos", "value": 3}, {"from": "house", "to": "uncertainty", "value": 3}, {"from": "house", "to": "nostalgia", "value": 3}, {"from": "house", "to": "support", "value": 2}, {"from": "house", "to": "loss", "value": 2}, {"from": "house", "to": "guidance", "value": 4}, {"from": "house", "to": "fear", "value": 4}, {"from": "house", "to": "door", "value": 2}, {"from": "house", "to": "loss control", "value": 2}, {"from": "house", "to": "window", "value": 2}, {"from": "house", "to": "success", "value": 2}, {"from": "house", "to": "guilt", "value": 2}, {"from": "house", "to": "car", "value": 2}, {"from": "house", "to": "insecurity", "value": 2}, {"from": "house", "to": "wedding", "value": 3}, {"from": "house", "to": "island", "value": 2}, {"from": "house", "to": "sun", "value": 2}, {"from": "house", "to": "train", "value": 2}, {"from": "resourcefulness", "to": "determination", "value": 2}, {"from": "challenges", "to": "night", "value": 2}, {"from": "challenges", "to": "support", "value": 2}, {"from": "challenges", "to": "change", "value": 2}, {"from": "challenges", "to": "anxiety", "value": 3}, {"from": "challenges", "to": "confusion", "value": 2}, {"from": "challenges", "to": "protection", "value": 2}, {"from": "night", "to": "fear", "value": 2}, {"from": "night", "to": "anxiety", "value": 2}, {"from": "night", "to": "support", "value": 2}, {"from": "support", "to": "fear", "value": 3}, {"from": "support", "to": "conflict", "value": 2}, {"from": "support", "to": "anxiety", "value": 2}, {"from": "support", "to": "nostalgia", "value": 2}, {"from": "support", "to": "guidance", "value": 3}, {"from": "support", "to": "family", "value": 2}, {"from": "support", "to": "uncertainty", "value": 3}, {"from": "support", "to": "protection", "value": 2}, {"from": "support", "to": "friendship", "value": 2}, {"from": "support", "to": "school", "value": 2}, {"from": "support", "to": "confusion", "value": 2}, {"from": "change", "to": "growth", "value": 2}, {"from": "anxiety", "to": "fear", "value": 4}, {"from": "anxiety", "to": "success", "value": 2}, {"from": "anxiety", "to": "identity", "value": 2}, {"from": "anxiety", "to": "personal growth", "value": 2}, {"from": "anxiety", "to": "authority", "value": 2}, {"from": "anxiety", "to": "danger", "value": 2}, {"from": "anxiety", "to": "insecurity", "value": 2}, {"from": "anxiety", "to": "confusion", "value": 2}, {"from": "anxiety", "to": "school", "value": 2}, {"from": "anxiety", "to": "family", "value": 2}, {"from": "anxiety", "to": "protection", "value": 2}, {"from": "confusion", "to": "fear", "value": 2}, {"from": "confusion", "to": "school", "value": 2}, {"from": "confusion", "to": "desire", "value": 2}, {"from": "protection", "to": "fire", "value": 2}, {"from": "protection", "to": "fear", "value": 2}, {"from": "protection", "to": "control", "value": 3}, {"from": "protection", "to": "personal growth", "value": 2}, {"from": "protection", "to": "guidance", "value": 2}, {"from": "protection", "to": "danger", "value": 2}, {"from": "resilience", "to": "fire", "value": 2}, {"from": "fire", "to": "city", "value": 2}, {"from": "fire", "to": "smoke", "value": 2}, {"from": "fire", "to": "fear", "value": 2}, {"from": "fire", "to": "danger", "value": 2}, {"from": "city", "to": "fear", "value": 4}, {"from": "city", "to": "struggle", "value": 2}, {"from": "city", "to": "road", "value": 2}, {"from": "city", "to": "nostalgia", "value": 3}, {"from": "city", "to": "vulnerability", "value": 2}, {"from": "city", "to": "insecurity", "value": 2}, {"from": "city", "to": "childhood", "value": 2}, {"from": "city", "to": "car", "value": 2}, {"from": "fear", "to": "confrontation", "value": 2}, {"from": "fear", "to": "control", "value": 3}, {"from": "fear", "to": "helicopter", "value": 2}, {"from": "fear", "to": "identity", "value": 2}, {"from": "fear", "to": "guidance", "value": 3}, {"from": "fear", "to": "danger", "value": 3}, {"from": "fear", "to": "health", "value": 2}, {"from": "fear", "to": "friendship", "value": 2}, {"from": "fear", "to": "chaos", "value": 2}, {"from": "fear", "to": "uncertainty", "value": 2}, {"from": "fear", "to": "nostalgia", "value": 2}, {"from": "fear", "to": "door", "value": 2}, {"from": "fear", "to": "childhood", "value": 2}, {"from": "fear", "to": "insecurity", "value": 2}, {"from": "fear", "to": "car", "value": 2}, {"from": "fear", "to": "road", "value": 2}, {"from": "fear", "to": "enjoyment", "value": 2}, {"from": "fear", "to": "vulnerability", "value": 2}, {"from": "fear", "to": "pressure", "value": 2}, {"from": "fear", "to": "family", "value": 2}, {"from": "frustration", "to": "control", "value": 2}, {"from": "frustration", "to": "moving", "value": 2}, {"from": "frustration", "to": "stability", "value": 2}, {"from": "chaos", "to": "door", "value": 2}, {"from": "uncertainty", "to": "success", "value": 2}, {"from": "uncertainty", "to": "guidance", "value": 4}, {"from": "uncertainty", "to": "transformation", "value": 2}, {"from": "uncertainty", "to": "trust", "value": 2}, {"from": "uncertainty", "to": "competition", "value": 3}, {"from": "uncertainty", "to": "door", "value": 2}, {"from": "nostalgia", "to": "reflection", "value": 3}, {"from": "nostalgia", "to": "insecurity", "value": 2}, {"from": "nostalgia", "to": "school", "value": 2}, {"from": "nostalgia", "to": "friendship", "value": 2}, {"from": "guidance", "to": "identity", "value": 2}, {"from": "door", "to": "window", "value": 2}, {"from": "success", "to": "control", "value": 2}, {"from": "success", "to": "challenge", "value": 2}, {"from": "success", "to": "hard work", "value": 2}, {"from": "insecurity", "to": "road", "value": 2}, {"from": "wedding", "to": "train", "value": 2}, {"from": "wedding", "to": "island", "value": 2}, {"from": "wedding", "to": "sun", "value": 2}, {"from": "island", "to": "train", "value": 2}, {"from": "island", "to": "sun", "value": 2}, {"from": "sun", "to": "train", "value": 2}, {"from": "control", "to": "empowerment", "value": 2}, {"from": "control", "to": "power", "value": 2}, {"from": "control", "to": "vulnerability", "value": 2}, {"from": "control", "to": "identity", "value": 2}, {"from": "identity", "to": "water", "value": 2}, {"from": "vulnerability", "to": "new beginnings", "value": 2}, {"from": "pressure", "to": "selfworth", "value": 2}, {"from": "family", "to": "hill", "value": 2}, {"from": "family", "to": "school", "value": 2}, {"from": "personal growth", "to": "relationships", "value": 2}, {"from": "school", "to": "reflection", "value": 2}, {"from": "school", "to": "belonging", "value": 2}, {"from": "exploration", "to": "selfexpression", "value": 2}, {"from": "balance", "to": "overwhelm", "value": 2}, {"from": "balance", "to": "stress", "value": 2}, {"from": "balance", "to": "connection", "value": 2}, {"from": "travel", "to": "adventure", "value": 2}, {"from": "new experiences", "to": "familiarity", "value": 2}, {"from": "sky", "to": "flying", "value": 2}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html></div><h1 style="text-align:center;"> </h1>
+<h2 style="text-align:center;">Shared Themes</h2>
+<div style="text-align:center;"><img src="wordcloud_themes.png" alt="Word Cloud Themes" style="width:80%;margin-top:20px;"></div>
+<h1 style="text-align:center;"> </h1>
+<h2 style="text-align:center;">Shared Symbols</h2>
+<div style="text-align:center;"><img src="wordcloud_symbols.png" alt="Word Cloud Symbols" style="width:80%;margin-top:20px;"></div>
